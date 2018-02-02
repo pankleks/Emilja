@@ -1,19 +1,4 @@
 namespace Emilja {
-    export interface IComponentCtor {
-        new(...p): Component;
-
-        template?: IComponentTemplate;
-        templateDocument?: DocumentFragment;
-        _p?: Promise<string>;
-
-        inputs?: {
-            [name: string]: {
-                key: string;
-                fn: (self: Component) => any;
-            }
-        };
-    }
-
     export interface IComponentTemplate {
         body?: string;
         url?: string;

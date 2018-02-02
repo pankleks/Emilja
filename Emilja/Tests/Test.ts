@@ -33,19 +33,18 @@ namespace Emilja {
         })
         _v = 0;
 
-        @Input<FunkyInput>("target", self => {                     
+        @Input<FunkyInput>("target", self => {
         })
         _target = 1;
 
         setBoundValue(v) {
             this._v = v;
         }
-    } 
-    
+    }
+
     @Template({
-        body: "<tr><td>AAA</td></tr>",
-        tag: "pl-row"
+        tag: "ej-content"
     })
-    class Row extends Component {        
+    class Content extends Component {
     }
 }

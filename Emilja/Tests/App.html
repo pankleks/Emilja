@@ -1,18 +1,22 @@
 <div [style]="color: ${_on ? 'red' : 'green'}">
     <h1>z = ${z}, n = ${n}, on = ${_on}</h1>
-    <input type="range" ej-bind="z"/>
+    <input type="range" ej-bind="z" />
     <!-- <pl-test (click)="_hello = $data"></pl-test>
     <pl-test (click)="_hello = $data"></pl-test>
     <h2>end ${n}</h2>-->
     <p>
         <ej-input class="blue" ej-bind="n" [target]="${z}"></ej-input>
-    </p>    
+    </p>
     <p>
         <input type="checkbox" ej-bind="_on" />
     </p>
 
+    <ej-content>
+        <div>Boo!</div>
+    </ej-content>
+
     <table>
-        <ej-row></ej-row>
-        <ej-row></ej-row>
+        <tr is="fancy-tr"></tr>
+        <tr is="fancy-tr"></tr>
     </table>
 </div>
