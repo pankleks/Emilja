@@ -22,13 +22,13 @@ namespace Emilja {
                 if (data.ok)
                     return data.text();
 
-                throw new Error(`Can't load template [${this._ctor.template.url}]`);
+                throw new Error(`EJ-0001: Can't load template [${this._ctor.template.url}]`);
             }
 
-            throw new Error(`No [body] or [url] is set.`);
+            throw new Error(`EJ-0002: No [body] or [url] is set.`);
         }
 
-        async connectedCallback() {
+        private async connectedCallback() {
             if (!this._ctor.templateDocument) {
                 let
                     fragment = document.createDocumentFragment(),
@@ -52,7 +52,7 @@ namespace Emilja {
             this.appendChild(contentDocument);
         }
 
-        attributeChangedCallback(name: string, lastV: any, v: any) {
+        private attributeChangedCallback(name: string, lastV: any, v: any) {
             let
                 input = this._ctor.inputs[name];
             if (input) {
