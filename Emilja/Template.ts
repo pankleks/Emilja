@@ -38,7 +38,6 @@ namespace Emilja {
         }
     }
 
-
     export function Monit<T extends Component>(fn: (self: T) => any) {
         return function (this: any, target, key) {
             if (delete this[key])
