@@ -67,8 +67,12 @@ namespace Emilja {
             let
                 contentDocument = (await this._ctor._document).cloneNode(true);
 
+            await this.prepeare();
+
             await grep(contentDocument, this, this, {});
             this.appendChild(contentDocument);
+
+            await this.ready();
         }
 
         private attributeChangedCallback(name: string, lastV: any, v: any) {
@@ -89,6 +93,16 @@ namespace Emilja {
             let
                 ev = new CustomEvent(name + this.$componentId, { detail: data });
             this.dispatchEvent(ev);
+        }
+
+        // development methods    
+        prepeare(): any {
+        }
+
+        ready(): any {
+        }
+
+        finalize(): void {
         }
     }
 
