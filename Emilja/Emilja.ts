@@ -47,11 +47,13 @@ namespace Emilja {
         try {
             let
                 _refresh = await fn();
-            if (_refresh !== false)
+            if (_refresh !== false) {
+                console.log(`refresh`);
                 await refresh();
+            }
         }
         catch (ex) {
-            alert(ex.message || ex);
+            service.error.processEx(ex);
         }
     }
 }
