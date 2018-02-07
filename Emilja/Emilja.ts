@@ -1,6 +1,7 @@
 namespace Emilja {
-    export async function grep(node: Node, hostEl: Element, component: Component, loopState: ILoopState) {        
+    export async function grep(node: Node, hostEl: Element, component: Component, loopState: ILoopState) {
         node.$component = component;
+
         switch (node.nodeType) {
             case Node.ELEMENT_NODE:
                 let
@@ -13,7 +14,7 @@ namespace Emilja {
 
                 break;
             case Node.TEXT_NODE:
-                
+
                 let
                     fn = getTextFn(node.textContent);
                 if (fn)

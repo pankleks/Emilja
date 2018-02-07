@@ -49,7 +49,7 @@ namespace Emilja {
         if (BOOL_ATTR.indexOf(name) !== -1)
             return new BoolAttrBind(el, name, getTextFn(value), loopState);
 
-        return new AttrBind(el, name, getTextFn(value), loopState);            
+        return new AttrBind(el, name, getTextFn(value), loopState);
     }
 
     Element.prototype.$nativeBind = async function (this: Element, loopState: ILoopState) {
@@ -82,7 +82,9 @@ namespace Emilja {
 
             return this.$addBind(bind);
         });
-    }    
+
+        await Element.prototype.$nativeBind.call(this, loopState);
+    }
 
     Component.prototype.$nativeBind = async function (this: Component, loopState: ILoopState) {
         await forEachAttr(
@@ -102,6 +104,6 @@ namespace Emilja {
     BindableComponent.prototype.$nativeBind = async function (this: BindableComponent<any>, loopState: ILoopState) {
         await processAttr(this, "ej-bind", value => this.$addBind(new BindableComponentBind(this, getValueFn(value), setValueFn(value), loopState)));
 
-        Component.prototype.$nativeBind.call(this, loopState);
+        await Component.prototype.$nativeBind.call(this, loopState);
     }
 }

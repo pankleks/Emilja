@@ -1,6 +1,6 @@
 <div [style]="color: ${_on ? 'red' : 'green'}">
     <h1>z = ${z}, n = ${n}, on = ${_on}</h1>
-    <input type="range" ej-bind="z" />
+    <input type="range" ej-bind="z" [style]="background-color: ${z > 10 ? 'red' : 'green'}" />
     <!-- <pl-test (click)="_hello = $data"></pl-test>
     <pl-test (click)="_hello = $data"></pl-test>
     <h2>end ${n}</h2>-->
