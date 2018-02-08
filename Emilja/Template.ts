@@ -29,7 +29,7 @@ namespace Emilja {
                 Object.defineProperty(target, key, {
                     set: function (this: any, value) {
                         this["$" + key] = value;
-                        execute(() => fn(this));
+                        execute(() => fn(this), `monit var [${key}]`);
                     },
                     get: function () {
                         return this["$" + key];

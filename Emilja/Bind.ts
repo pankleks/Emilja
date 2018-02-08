@@ -61,7 +61,7 @@ namespace Emilja {
             else
                 this._node.removeAttribute(this._name);
         }
-    }    
+    }
 
     abstract class ValueBind<T extends HTMLElement> extends ReadonlyBind<T> {
         constructor(node: T, getValueFn: TGetValueFn, protected _setValueFn: TSetValueFn, loopState: ILoopState) {
@@ -74,7 +74,7 @@ namespace Emilja {
         updateValue(v: any) {
             execute(() => {
                 this._setValueFn(this._node.$component, v, this._loopState);
-            });
+            }, `bind update value`);
         }
     }
 
@@ -100,14 +100,14 @@ namespace Emilja {
         updateElement(v: any) {
             this._node.checked = v === true;
         }
-    }    
+    }
 
     export class BindableComponentBind extends ValueBind<BindableComponent<any>> {
         attach() {
             this._node.boundValueChanged = v => this.updateValue(v);
         }
 
-        updateElement(v: any) {            
+        updateElement(v: any) {
             this._node.setBoundValue(v);
         }
     }

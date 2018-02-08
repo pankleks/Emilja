@@ -81,7 +81,7 @@ namespace Emilja {
             if (input) {
                 this[input.key] = v;
                 if (typeof input.fn === "function")
-                    execute(() => input.fn(this));
+                    execute(() => input.fn(this), `comp. input changed [${name}]`);
             }
         }
 

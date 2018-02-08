@@ -29,7 +29,12 @@ namespace Emilja {
         }
     }
 
-    export async function refresh(el: Element = document.body) {
+    export async function refresh(debug: string) {
+        console.log(`* ${debug}`);
+        refreshEl(document.body);
+    }
+
+    async function refreshEl(el: Element) {
         if (el.$bindings)
             for (let bind of el.$bindings)
                 await bind.refresh();
@@ -38,19 +43,17 @@ namespace Emilja {
             let
                 childNode = el.childNodes[i];
             if (childNode.nodeType === Node.ELEMENT_NODE)
-                await refresh(<Element>childNode);
+                await refreshEl(<Element>childNode);
         }
     }
 
-    export async function execute(fn: () => any) {
+    export async function execute(fn: () => any, debug: string) {
         // todo: add execution queue
         try {
             let
                 _refresh = await fn();
-            if (_refresh !== false) {
-                console.log(`refresh`);
-                await refresh();
-            }
+            if (_refresh !== false)
+                await refresh(debug);
         }
         catch (ex) {
             service.error.processEx(ex);

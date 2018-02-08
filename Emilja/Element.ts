@@ -62,7 +62,7 @@ namespace Emilja {
 
                 this.addEventListener(name, (ev: Event & { detail }) => {
                     ev.stopPropagation();
-                    execute(() => fn(this.$component, ev, ev.detail));
+                    execute(() => fn(this.$component, ev, ev.detail), `event [${name}]`);
                 });
             });
     }
@@ -96,7 +96,7 @@ namespace Emilja {
 
                 this.addEventListener(name + this.$componentId, (ev: Event & { detail }) => {
                     ev.stopPropagation();
-                    execute(() => fn(this.$component, ev, ev.detail));
+                    execute(() => fn(this.$component, ev, ev.detail), `comp. event [${name}]`);
                 });
             });
     }
