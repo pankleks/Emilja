@@ -31,19 +31,19 @@ namespace Emilja {
 
     export async function refresh(debug: string) {
         console.log(`* ${debug}`);
-        refreshEl(document.body);
+        refreshNode(document.body);
     }
 
-    async function refreshEl(el: Element) {
-        if (el.$bindings)
-            for (let bind of el.$bindings)
+    async function refreshNode(node: Node) {
+        if (node.$bindings)
+            for (let bind of node.$bindings)
                 await bind.refresh();
 
-        for (let i = 0; i < el.childNodes.length; i++) {
+        for (let i = 0; i < node.childNodes.length; i++) {
             let
-                childNode = el.childNodes[i];
-            if (childNode.nodeType === Node.ELEMENT_NODE)
-                await refreshEl(<Element>childNode);
+                childNode = node.childNodes[i];
+
+            await refreshNode(<Element>childNode);
         }
     }
 

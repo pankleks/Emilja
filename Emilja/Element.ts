@@ -1,9 +1,9 @@
 interface Node {
     $component: Emilja.Component;
+    $bindings: Emilja.Bind[];
 }
 
 interface Element {
-    $bindings: Emilja.Bind[];
     $addBind(bind: Emilja.Bind);
     $nativeBind(loopState: Emilja.ILoopState);
     $componentId: number;
@@ -53,6 +53,8 @@ namespace Emilja {
     }
 
     Element.prototype.$nativeBind = async function (this: Element, loopState: ILoopState) {
+        await processAttr(this, "ej-if", value => this.$addBind(new IfBind(this, getValueFn(value), loopState)));
+
         await forEachAttr(
             this,
             (name, value) => this.$addBind(getAttrBind(this, name, value, loopState)),

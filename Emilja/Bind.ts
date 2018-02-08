@@ -63,6 +63,28 @@ namespace Emilja {
         }
     }
 
+    export class IfBind extends ReadonlyBind<Element> {
+        private _hookEl: Comment;
+
+        constructor(node: Element, getValueFn: TGetValueFn, loopState: ILoopState) {
+            super(node, getValueFn, loopState);
+
+            this._hookEl = document.createComment(`${this._node.tagName}`);
+
+            this._hookEl.$component = this._node.$component;
+            this._hookEl.$bindings = [this];
+
+            this._node.parentNode.replaceChild(this._hookEl, this._node);
+        }
+
+        updateElement(v: any) {
+            if (v)
+                this._hookEl.parentElement.replaceChild(this._node, this._hookEl);
+            else
+                this._node.parentNode.replaceChild(this._hookEl, this._node);
+        }
+    }
+
     abstract class ValueBind<T extends HTMLElement> extends ReadonlyBind<T> {
         constructor(node: T, getValueFn: TGetValueFn, protected _setValueFn: TSetValueFn, loopState: ILoopState) {
             super(node, getValueFn, loopState);
