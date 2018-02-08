@@ -1,10 +1,10 @@
 interface Node {
     $component: Emilja.Component;
     $bindings: Emilja.Bind[];
+    $addBind(bind: Emilja.Bind);
 }
 
 interface Element {
-    $addBind(bind: Emilja.Bind);
     $nativeBind(loopState: Emilja.ILoopState);
     $componentId: number;
 }
@@ -12,7 +12,7 @@ interface Element {
 namespace Emilja {
     const BOOL_ATTR = ["disabled", "readonly", "autofocus", "checked"];
 
-    Element.prototype.$addBind = async function (this: Element, bind: Bind) {
+    Node.prototype.$addBind = async function (this: Node, bind: Bind) {
         await bind.refresh();
         this.$bindings.push(bind);
     }
@@ -53,7 +53,27 @@ namespace Emilja {
     }
 
     Element.prototype.$nativeBind = async function (this: Element, loopState: ILoopState) {
-        await processAttr(this, "ej-if", value => this.$addBind(new IfBind(this, getValueFn(value), loopState)));
+        await processAttr(this, "ej-if", value => {
+            let
+                hookEl = document.createComment("if-hook");
+            hookEl.$component = this.$component;
+            hookEl.$bindings = [];
+
+            this.parentNode.replaceChild(hookEl, this);
+
+            hookEl.$addBind(new IfBind(hookEl, this, getValueFn(value), loopState));
+        });
+
+        await processAttr(this, "ej-loop", value => {
+            let
+                hookEl = document.createComment("loop-hook");
+            hookEl.$component = this.$component;
+            hookEl.$bindings = [];
+
+            this.parentNode.replaceChild(hookEl, this);
+
+            hookEl.$addBind(new LoopBind(hookEl, this, getValueFn(value), loopState));
+        });
 
         await forEachAttr(
             this,

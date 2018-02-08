@@ -9,6 +9,13 @@ namespace Emilja {
         n = 10;
         z = 5;
         _on = true;
+
+        zArray() {
+            let t = [];
+            for (let i = 0; i < this.z; i++)
+                t.push(`zzz ${i}`);
+            return t;
+        }
     }
 
     @Template({

@@ -63,25 +63,34 @@ namespace Emilja {
         }
     }
 
-    export class IfBind extends ReadonlyBind<Element> {
-        private _hookEl: Comment;
-
-        constructor(node: Element, getValueFn: TGetValueFn, loopState: ILoopState) {
+    export class IfBind extends ReadonlyBind<Comment> {
+        constructor(node: Comment, private _templateEl: Element, getValueFn: TGetValueFn, loopState: ILoopState) {
             super(node, getValueFn, loopState);
-
-            this._hookEl = document.createComment(`${this._node.tagName}`);
-
-            this._hookEl.$component = this._node.$component;
-            this._hookEl.$bindings = [this];
-
-            this._node.parentNode.replaceChild(this._hookEl, this._node);
         }
 
         updateElement(v: any) {
             if (v)
-                this._hookEl.parentElement.replaceChild(this._node, this._hookEl);
+                this._node.parentNode.insertBefore(this._templateEl, this._node);
             else
-                this._node.parentNode.replaceChild(this._hookEl, this._node);
+                this._node.parentNode.removeChild(this._templateEl);
+        }
+    }
+
+    export class LoopBind extends ReadonlyBind<Comment> {
+
+        constructor(node: Comment, private _templateEl: Element, getValueFn: TGetValueFn, loopState: ILoopState) {
+            super(node, getValueFn, loopState);
+        }
+
+        updateElement(v: any) {
+            let
+                list = Array.isArray(v) ? v : [];
+
+            for (let i = 0; i < list.length; i++) {
+                let
+                    el = this._templateEl.cloneNode(true);
+                this._node.insertBefore(el, this._node);
+            }
         }
     }
 
